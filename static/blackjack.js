@@ -9,17 +9,17 @@ let dealer = [];
 let freeze = false;
 
 let halfBustAnimation = 0;
+let dealerNext = false;
 let endingAnimation = -0.1;
 let cardStun = 0;
 
 let busted = false;
-let playerWinSoEzJajajajjaa = false;
+let splitBusted = [false, false];
+let playerWins = false;
 let dealerWin = false;
 let push = false;
 
 let split = false;
-let bottomBust = false;
-let topBust = false;
 
 const imgs = new Map();
 
@@ -52,10 +52,8 @@ function randomCard(selfArr, otherArr, otherOtherArr, hidden) {
 }
 
 function preload() {
-    player.push({card: "5C", hidden: false});
-    player.push({card: "5D", hidden: false});
-    // randomCard(player, dealer, false);
-    // randomCard(player, dealer, false);
+    randomCard(player, dealer, player2, false);
+    randomCard(player, dealer, player2, false);
 
     randomCard(dealer, player, player2, false);
     randomCard(dealer, player, player2, true);
@@ -161,7 +159,19 @@ function draw() {
     noStroke();
     tint(255, 255);
 
-    if (dealerWin || playerWinSoEzJajajajjaa || push || busted) {
+    if ((splitBusted[0] || splitBusted[1]) && !busted) {
+        if (halfBustAnimation < 1) {
+            halfBustAnimation += 0.05;
+            if (dealerNext) {
+                dealerRound();
+                dealerNext = false;
+            }
+
+            if (halfBustAnimation > 1) halfBustAnimation = 1;
+        }
+    }
+
+    if (dealerWin || playerWins || push || busted) {
         if (cardStun < 1) {
             revealCards();
             freeze = true;
@@ -184,7 +194,7 @@ function draw() {
             return;
         }
 
-        if (playerWinSoEzJajajajjaa) {
+        if (playerWins) {
             textSize(127);
             fill(52, 235, 97);
             textFont("DM Mono");
@@ -221,8 +231,12 @@ function draw() {
     if (!split) {
         drawCardsCentered(player, 500);
     } else {
+        if (splitBusted[0]) tint(255, 255, 255, 255 - (255*halfBustAnimation));
         drawCardsCentered(player, 300);
+        tint(255, 255, 255, 255);
+        if (splitBusted[1]) tint(255, 255, 255, 255 - (255*halfBustAnimation));
         drawCardsCentered(player2, 500);
+        tint(255, 255, 255, 255);
     }
 
     textSize(18);
@@ -245,6 +259,12 @@ function revealCards() {
 
 function dealerRound() {
     let playerPoints = calcPoints(player);
+    if (split) {
+        const p2 = calcPoints(player2);
+
+        if (!splitBusted[1]) playerPoints = Math.max(playerPoints, p2);
+        if (splitBusted[0]) playerPoints = p2;
+    }
     let dealerPoints = calcPoints(dealer);
 
     while (dealerPoints < playerPoints && dealerPoints < 17) {
@@ -259,8 +279,8 @@ function dealerRound() {
     }
 
     if (dealerPoints > 21 || playerPoints > dealerPoints) {
-        playerWinSoEzJajajajjaa = true;
-    } else if (playerPoints == dealerPoints) {
+        playerWins = true;
+    } else if (playerPoints === dealerPoints) {
         push = true;
     } else if (dealerPoints > playerPoints) {
         dealerWin = true;
@@ -269,6 +289,7 @@ function dealerRound() {
 
 function g_hit() {
     if (freeze) return;
+    if (splitBusted[0] || splitBusted[1]) return;
 
     if (!split) {
         randomCard(player, dealer, player2, false);
@@ -277,10 +298,13 @@ function g_hit() {
     } else {
         randomCard(player, dealer, player2, false);
         let playerPoints = calcPoints(player);
-        randomCard(player2, dealer, false);
-        let playerPoints2 = calcPoints(player2);
+        randomCard(player2, dealer, player, false);
 
-        console.log(playerPoints, playerPoints2);
+        dealerNext = true
+
+        if (playerPoints > 21) splitBusted[0] = true;
+        if (playerPoints2 > 21) splitBusted[1] = true;
+        if (splitBusted[0] && splitBusted[1]) busted = true;
     }
 }
 
