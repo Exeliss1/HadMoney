@@ -1,0 +1,142 @@
+body {
+    background-color: #4f4d68;
+    font-family: 'DM Mono';
+}
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #7a7aa7;
+  color: white;
+  text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: none;
+    border-radius: 15px;
+    border: .5px solid #7a7aa7;
+  }
+  
+.navbar li {
+    float: left;
+    border: none;
+  }
+.navbar li:last-child {
+    float: left;
+    border: none;
+  }
+.navbar li:nth-last-child(n + 2) {
+    float: left;
+    border-right: .5px solid #7a7aa7;
+  }
+  
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+.navbar li a:hover {
+    background-color: #111;
+    transition: all .4s ease;
+    -webkit-transition: all .4s ease;
+    border-radius: 15px;
+  }
+
+.logo {
+    width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -150px;
+  }
+
+#container img{
+    width: 600px;
+    display: block;
+    margin-left: 200px;
+    margin-right: auto;
+    opacity: .5;
+    transition: .3s;
+    }
+
+#container {
+    /*background-color: black;*/
+    width: 702px;
+    height: 399px;
+    float: left;
+
+}
+#container p {
+    position: fixed;
+    text-align: center;
+    color: white;
+    margin-left: 440px;
+    opacity: 0;
+    transition: .3s;
+    margin-top: -100px;
+}
+
+#container:hover p{
+    opacity: 1;
+ }
+ #container:hover img{
+    opacity: 1;
+    margin-top: -50px;
+ }
+
+ #container2 img{
+    width: 600px;
+    display: block;
+    margin-left: -100px;
+    margin-right: auto;
+    margin-top: 0px;
+    opacity: .5;
+    transition: .3s;
+    }
+
+#container2 {
+    width: 702px;
+    height: 399px;
+    display: block;
+    float: right;
+}
+#container2 p {
+    position: fixed;
+    text-align: center;
+    color: white;
+    margin-left: 160px;
+    margin-top: -100px;
+    opacity: 0;
+    transition: .3s;
+}
+
+#container2:hover p{
+    opacity: 1;
+
+ }
+ #container2:hover img{
+    opacity: 1;
+    margin-top: -50px;  
+ }
+
+
+#p5-canvas {
+  display: block;
+  margin-left: 200px;  
+}
+
+.buttons {
+  position: absolute;
+  left: 850px;
+  bottom: 30px;
+}
