@@ -1,4 +1,4 @@
-const cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S","7C","7D","7H","7S","8C","8D","8H","8S","9C","9D","9H","9S","aC","aD","aH","aS","jC","jD","jH","jS","kC","kD","kH","kS","qC","qD","qH","qS","tC","tD","tH","tS"];
+const cards = ["2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "aC", "aD", "aH", "aS", "jC", "jD", "jH", "jS", "kC", "kD", "kH", "kS", "qC", "qD", "qH", "qS", "tC", "tD", "tH", "tS"];
 const srcs = cards.map(m => m);
 srcs.push("cardBack");
 
@@ -35,7 +35,7 @@ function _rcard2(selfArr, otherArr, hidden) {
         console.log(newCard, otherArr);
 
         otherArr.forEach(c => {
-            const { card } = c;
+            const {card} = c;
 
             if (card === newCard) reroll = true;
         });
@@ -47,19 +47,19 @@ function _rcard2(selfArr, otherArr, hidden) {
 function randomCard(selfArr, otherArr, otherOtherArr, hidden) {
     let card = _rcard2(selfArr, otherArr, hidden);
     if (otherOtherArr.includes(card)) card = _rcard2(selfArr, otherOtherArr, hidden);
-    
+
     return card;
 }
 
-function preload() {    
-    player.push({ card: "5C", hidden: false });
-    player.push({ card: "5D", hidden: false });
+function preload() {
+    player.push({card: "5C", hidden: false});
+    player.push({card: "5D", hidden: false});
     // randomCard(player, dealer, false);
     // randomCard(player, dealer, false);
-    
+
     randomCard(dealer, player, player2, false);
     randomCard(dealer, player, player2, true);
-    
+
     srcs.forEach(s => imgs.set(s, loadImage(`cards/${s}.png`)));
 }
 
@@ -92,7 +92,7 @@ function drawCardsCentered(cardList, y) {
         case 3:
             x = 460;
             break;
-            case 2:
+        case 2:
             x = 550;
             break;
         default:
@@ -106,7 +106,7 @@ function drawCardsCentered(cardList, y) {
         let cardImg = card.card;
         if (card.hidden) cardImg = "cardBack";
         drawCard(cardImg, x, y);
-        
+
         x += margin;
     }
 }
@@ -198,7 +198,7 @@ function draw() {
             fill(255, 151, 0);
             textFont("DM Mono");
             text("PUSH", 590, animateEnding(endingAnimation) * 350);
-            
+
             return;
         }
 
@@ -217,7 +217,7 @@ function draw() {
     } else {
         drawCardsCentered(dealer, 0);
     }
-    
+
     if (!split) {
         drawCardsCentered(player, 500);
     } else {
@@ -269,11 +269,11 @@ function dealerRound() {
 
 function g_hit() {
     if (freeze) return;
-    
+
     if (!split) {
         randomCard(player, dealer, player2, false);
         let playerPoints = calcPoints(player);
-        if (playerPoints > 21) busted = true;    
+        if (playerPoints > 21) busted = true;
     } else {
         randomCard(player, dealer, player2, false);
         let playerPoints = calcPoints(player);
@@ -297,8 +297,8 @@ function g_split() {
     if (split) return;
 
     split = true;
-    
-    const [ first, second ] = player;
+
+    const [first, second] = player;
     player = [first];
     player2 = [second];
 

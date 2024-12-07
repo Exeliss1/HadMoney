@@ -12,22 +12,24 @@ body {
     background: none;
     border-radius: 15px;
     border: .5px solid #7a7aa7;
-  }
-  
-  .navbar li {
+}
+
+.navbar li {
     float: left;
     border: none;
-  }
-  .navbar li:last-child {
+}
+
+.navbar li:last-child {
     float: left;
     border: none;
-  }
-  .navbar li:nth-last-child(n + 2) {
+}
+
+.navbar li:nth-last-child(n + 2) {
     float: left;
     border-right: .5px solid #7a7aa7;
-  }
-  
-  .navbar li a {
+}
+
+.navbar li a {
     display: block;
     color: white;
     text-align: center;
@@ -35,32 +37,32 @@ body {
     text-decoration: none;
     transition: all .4s ease;
     -webkit-transition: all .4s ease;
-  }
-  
-  .navbar li a:hover {
+}
+
+.navbar li a:hover {
     background-color: #111;
     transition: all .4s ease;
     -webkit-transition: all .4s ease;
     border-radius: 15px;
-  }
+}
 
-  .label {
+.label {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  }
+}
 
-  .logo {
+.logo {
     width: 250px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: -150px;
-  }
+}
 
-  .footer {
+.footer {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -68,139 +70,144 @@ body {
     background-color: #7a7aa7;
     color: white;
     text-align: center;
-  }
+}
 
-  .leaderboard {
+.leaderboard {
     margin-left: 1450px;
     margin-top: -800px;
     animation: fade-in 3700ms 1000ms backwards;
-  }
+}
 
-  .leaderboard, th,td{
+.leaderboard, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     border-color: #7a7aa7;
-    color:white;
+    color: white;
     text-align: center;
-  }
+}
 
 .nemtom {
-  padding: 200px;
-  animation: fade-in 900ms 700ms backwards;
+    padding: 200px;
+    animation: fade-in 900ms 700ms backwards;
 }
 
 .cards {
-  width: 570px;
-  margin-left: 1125px;
-  margin-top: -645px;
-  animation: fade-in 900ms 700ms backwards;
+    width: 570px;
+    margin-left: 1125px;
+    margin-top: -645px;
+    animation: fade-in 900ms 700ms backwards;
 
 }
 
 .nemtom p {
-  font-size: 47px;
-  margin-top: -278px;
-  margin-left: -15px;
-  margin-right: 1000px;
+    font-size: 47px;
+    margin-top: -278px;
+    margin-left: -15px;
+    margin-right: 1000px;
 }
 
 .loginbutton {
-  padding: 23px 20px;
-  width: 140px;
-  font-size: 15px;
-  background-color: #7a7aa7;
-  border: none;
-  border-radius: 5px;
-  border: 1px solid white;
-  margin-left: -12px;
-  margin-top: 200px;
-  color:white;
+    padding: 23px 20px;
+    width: 140px;
+    font-size: 15px;
+    background-color: #7a7aa7;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid white;
+    margin-left: -12px;
+    margin-top: 200px;
+    color: white;
 }
 
 .secure {
-  width: 100px;
-  margin-left: 100px;
-  margin-top: 150px;
+    width: 100px;
+    margin-left: 100px;
+    margin-top: 150px;
 }
 
 .money {
-  width: 150px;
-  margin-left: 70px;
-  margin-top: 150px;
+    width: 150px;
+    margin-left: 70px;
+    margin-top: 150px;
 }
 
 .fair {
-  width: 150px;
-  margin-left: 70px;
-  margin-top: 150px;
+    width: 150px;
+    margin-left: 70px;
+    margin-top: 150px;
 }
 
 .text {
-  margin-left: 235px;
-  font-size: 20px;
-  margin-top: -155px;
-  text-justify: auto;
-  margin-right: 700px;
+    margin-left: 235px;
+    font-size: 20px;
+    margin-top: -155px;
+    text-justify: auto;
+    margin-right: 700px;
 }
+
 .text2 {
-  margin-left: 240px;
-  font-size: 20px;
-  margin-top: -155px;
-  text-justify: auto;
-  margin-right: 700px;
+    margin-left: 240px;
+    font-size: 20px;
+    margin-top: -155px;
+    text-justify: auto;
+    margin-right: 700px;
 }
+
 .text3 {
-  margin-left: 240px;
-  font-size: 20px;
-  margin-top: -190px;
-  text-justify: auto;
-  margin-right: 700px;
+    margin-left: 240px;
+    font-size: 20px;
+    margin-top: -190px;
+    text-justify: auto;
+    margin-right: 700px;
 }
 
 
-  /* animation class and keyframes */
+/* animation class and keyframes */
 .overflow-hidden {
-  overflow: hidden;
- }
- 
- .drop-in {
-  animation: drop-in 1s ease 200ms backwards;
- }
- 
- .fade-in {
-  animation: fade-in 3000ms 1000ms backwards;
- }
-  
- .fade-in-2 {
-  animation: fade-in 3500ms 1500ms backwards;
- }
- .fade-in-3 {
-  animation: fade-in 4000ms 2000ms backwards;
- }
- .fade-in-4 {
-  animation: fade-in 4500ms 2500ms backwards;
- }
- .fade-in-5 {
-  animation: fade-in 5000ms 3000ms backwards;
- }
- 
- 
- @keyframes drop-in {
-  from {
-   opacity: 0;
-   transform: translateY(-100px);
-  }
-  to {
-   opacity: 1;
-   transform: translate(0px);
-  }
- }
+    overflow: hidden;
+}
 
- @keyframes fade-in {
-  from {
-   opacity: 0;
-  }
-  to {
-   opacity: 1;
-  }
- }
+.drop-in {
+    animation: drop-in 1s ease 200ms backwards;
+}
+
+.fade-in {
+    animation: fade-in 3000ms 1000ms backwards;
+}
+
+.fade-in-2 {
+    animation: fade-in 3500ms 1500ms backwards;
+}
+
+.fade-in-3 {
+    animation: fade-in 4000ms 2000ms backwards;
+}
+
+.fade-in-4 {
+    animation: fade-in 4500ms 2500ms backwards;
+}
+
+.fade-in-5 {
+    animation: fade-in 5000ms 3000ms backwards;
+}
+
+
+@keyframes drop-in {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0px);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
