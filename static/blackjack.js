@@ -40,7 +40,10 @@ function _rcard2(selfArr, otherArr, hidden) {
             if (card === newCard) reroll = true;
         });
 
-        if (!reroll) selfArr.push({card: newCard, hidden});
+        if (!reroll) {
+            selfArr.push({card: newCard, hidden});
+            return newCard;
+        }
     } while (reroll);
 }
 
