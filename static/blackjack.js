@@ -18,7 +18,7 @@ let splitBusted = [false, false];
 let playerWins = false;
 let dealerWin = false;
 let push = false;
-
+let resetting = false;
 let split = false;
 
 const imgs = new Map();
@@ -156,6 +156,41 @@ function animateEnding(timeFraction) {
     return Math.pow(timeFraction, 2);
 }
 
+function resetGame() {
+    location.reload();
+}
+
+let bigWining = false;
+function bigWin() {
+    if (bigWining) return;
+    bigWining = true;
+
+    const video = document.createElement('video');
+    const canvas = document.getElementById('p5-canvas');
+    const buttons = document.querySelector('.buttons');
+    canvas.style.display = 'none';
+    video.src = '/bigwin.webm';
+    video.style.width = canvas.style.width;
+    video.style.height = canvas.style.height;
+    video.style.marginLeft = '200px';
+
+    document.querySelector("main").insertBefore(video, canvas);
+    buttons.style.display = 'none';
+    video.play();
+
+    const interval = setInterval(() => {
+        if (video.currentTime > 5) {
+            bigWining = false;
+            clearInterval(interval);
+            video.remove();
+            buttons.style.display = '';
+            canvas.style.display = 'block';
+
+            resetGame();
+        }
+    }, 100);
+}
+
 function draw() {
     background(79, 77, 104, 255);
 
@@ -194,14 +229,18 @@ function draw() {
             textFont("DM Mono");
             text("Dealer wins", 330, animateEnding(endingAnimation) * 350);
 
+            if (!resetting) {
+                resetting = true;
+                setTimeout(() => {
+                    resetGame();
+                }, 2500);
+            }
+
             return;
         }
 
         if (playerWins) {
-            textSize(127);
-            fill(52, 235, 97);
-            textFont("DM Mono");
-            text("BIG WIN", 490, animateEnding(endingAnimation) * 350);
+            if (!bigWining) bigWin();
 
             return;
         }
@@ -212,6 +251,13 @@ function draw() {
             textFont("DM Mono");
             text("PUSH", 590, animateEnding(endingAnimation) * 350);
 
+            if (!resetting) {
+                resetting = true;
+                setTimeout(() => {
+                    resetGame();
+                }, 2500);
+            }
+
             return;
         }
 
@@ -220,6 +266,13 @@ function draw() {
             fill(255, 0, 0);
             textFont("DM Mono");
             text("BUST", 590, animateEnding(endingAnimation) * 350);
+
+            if (!resetting) {
+                resetting = true;
+                setTimeout(() => {
+                    resetGame();
+                }, 2500);
+            }
 
             return;
         }
