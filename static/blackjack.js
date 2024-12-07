@@ -295,13 +295,14 @@ function draw() {
         tint(255, 255, 255, 255);
     }
 
+    /*
     textSize(18);
-
     fill(255, 0, 0);
     text(calcPoints(dealer), 100, 680);
 
     fill(255, 255, 255);
     text(`${calcPoints(player)}:${calcPoints(player2)}`, 100, 700);
+     */
 }
 
 function revealCards() {
