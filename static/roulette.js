@@ -5,6 +5,8 @@ let roulette_wheel;
 let baseSpinRate = 0.1;
 let ballRounds = 0;
 let ballStopRounds = 0;
+let ballMaxDist = 0;
+let ballDist = 0;
 let ballStop = 0;
 
 function preload() {
@@ -15,7 +17,8 @@ function preload() {
     baseSpinRate += random(0.02, 0.1);
     ballStopRounds = Math.floor(random(4, 8));
     ballStop = random(0, Math.PI*2);
-    console.log(ballStopRounds, ballStop)
+    ballMaxDist = ballStopRounds*Math.PI*2;
+    ballMaxDist += ballStop;
 }
 
 function setup() {
@@ -82,8 +85,8 @@ function drawWheel(angle) {
 
     imageMode(CENTER);
 
-    // TODO: Make scaling smoother
-    // scale(1 - (0.35 * (ballRounds / ballStopRounds)));
+    const circScale = ballDist / ballMaxDist;
+    scale(0.8 - (0.25 * circScale));
     rotate(j);
     if (j < 0) {
         j = Math.PI*2;
@@ -107,14 +110,18 @@ function draw() {
     tint(255, 255);
 
     // frameRate()
-    let debug = `${i} ${j} ${rvals[ballLocation(i, j)]}`;
+    let debug = `${i} ${j} ${rvals[ballLocation(i, j)]} ${frameRate()}`;
     text(debug, 50, 50);
 
     if (wheelSpinState < 1) wheelSpinState += random(0.004, 0.01);
     if (wheelSpinState > 1) wheelSpinState = 1;
     i += (baseSpinRate * (1 - animate(wheelSpinState)));
     if (ballRounds < ballStopRounds || Math.abs(j - ballStop) > 0.1) {
-        j -= 0.05;
+        const speed = 1 - Math.max(animate(ballDist / ballMaxDist), 0.05);
+        console.log(speed);
+
+        j -= 0.2 * speed;
+        ballDist += 0.2 * speed;
     }
     if (i >= 6.283) i -= 6.283;
 
