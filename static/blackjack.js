@@ -324,11 +324,13 @@ function dealerRound() {
     }
     let dealerPoints = calcPoints(dealer);
 
-    while (dealerPoints < playerPoints && dealerPoints < 17) {
-        randomCard(dealer, player, player2, false);
+    if (playerPoints !== 21) {
+        while (dealerPoints < playerPoints && dealerPoints < 17) {
+            randomCard(dealer, player, player2, false);
 
-        playerPoints = calcPoints(player);
-        dealerPoints = calcPoints(dealer);
+            playerPoints = calcPoints(player);
+            dealerPoints = calcPoints(dealer);
+        }
     }
 
     if (playerPoints > 21) {
