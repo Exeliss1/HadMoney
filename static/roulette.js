@@ -61,14 +61,27 @@ function ballLocation(angle, ballPos) {
     debugger;
 }
 
-function drawWheel(angle) {
+function drawWheel() {
+    if (wheelSpinState < 1) wheelSpinState += random(0.004, 0.01);
+    if (wheelSpinState > 1) wheelSpinState = 1;
+    wheelAngle += (baseSpinRate * (1 - animate(wheelSpinState)));
+    if (ballRounds < ballStopRounds || Math.abs(ballAngle - ballStop) > 0.1) {
+        const speed = 1 - Math.max(animate(ballDist / ballMaxDist), 0.05);
+        ballAngle -= 0.2 * speed;
+        ballDist += 0.2 * speed;
+    }
+    if (wheelAngle >= 6.283) wheelAngle -= 6.283;
+
+    push();
+    translate(350, 0);
+
     const xOffset = 74+(452/2);
     const yOffset = 74+(452/2);
 
     translate(xOffset, yOffset);
 
     push();
-    rotate(angle);
+    rotate(wheelAngle);
     imageMode(CENTER);
     image(roulette_wheel, 0, 0, 452, 452);
     pop();
@@ -88,12 +101,12 @@ function drawWheel(angle) {
     if (ballAngle < 0) {
         ballAngle = Math.PI*2;
         ballRounds++;
-        console.log(ballRounds);
     }
     image(roulette_pill, 0, 0);
+    pop();
 }
 
-let i = 0;
+let wheelAngle = 0;
 let wheelSpinState = 0;
 
 function animate(timeFraction) {
@@ -106,20 +119,5 @@ function draw() {
     noStroke();
     tint(255, 255);
 
-    if (wheelSpinState < 1) wheelSpinState += random(0.004, 0.01);
-    if (wheelSpinState > 1) wheelSpinState = 1;
-    i += (baseSpinRate * (1 - animate(wheelSpinState)));
-    if (ballRounds < ballStopRounds || Math.abs(ballAngle - ballStop) > 0.1) {
-        const speed = 1 - Math.max(animate(ballDist / ballMaxDist), 0.05);
-        console.log(speed);
-
-        ballAngle -= 0.2 * speed;
-        ballDist += 0.2 * speed;
-    }
-    if (i >= 6.283) i -= 6.283;
-
-    push();
-    translate(350, 0);
-    drawWheel(i);
-    pop();
+    drawWheel();
 }
