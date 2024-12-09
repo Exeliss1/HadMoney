@@ -26,10 +26,7 @@ function setup() {
     canvas.id("p5-canvas");
 }
 
-let j = 0;
-let k = 0;
-let l = 1;
-
+let ballAngle = 0;
 const rvals = [0, 32, 15, 19, 4, 21, 2, 25, 17, 13, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 13, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
 const ranges = [];
 {
@@ -87,9 +84,9 @@ function drawWheel(angle) {
 
     const circScale = ballDist / ballMaxDist;
     scale(0.8 - (0.25 * circScale));
-    rotate(j);
-    if (j < 0) {
-        j = Math.PI*2;
+    rotate(ballAngle);
+    if (ballAngle < 0) {
+        ballAngle = Math.PI*2;
         ballRounds++;
         console.log(ballRounds);
     }
@@ -109,18 +106,14 @@ function draw() {
     noStroke();
     tint(255, 255);
 
-    // frameRate()
-    let debug = `${i} ${j} ${rvals[ballLocation(i, j)]} ${frameRate()}`;
-    text(debug, 50, 50);
-
     if (wheelSpinState < 1) wheelSpinState += random(0.004, 0.01);
     if (wheelSpinState > 1) wheelSpinState = 1;
     i += (baseSpinRate * (1 - animate(wheelSpinState)));
-    if (ballRounds < ballStopRounds || Math.abs(j - ballStop) > 0.1) {
+    if (ballRounds < ballStopRounds || Math.abs(ballAngle - ballStop) > 0.1) {
         const speed = 1 - Math.max(animate(ballDist / ballMaxDist), 0.05);
         console.log(speed);
 
-        j -= 0.2 * speed;
+        ballAngle -= 0.2 * speed;
         ballDist += 0.2 * speed;
     }
     if (i >= 6.283) i -= 6.283;
