@@ -24,14 +24,64 @@
 <!-- Navbar end -->
 
 <div id="container">
-    <a href="blackjack.html" style="text-align: center;"><img src="Blackjack.svg" alt="blackjack"></a>
+    <a onclick="blackjack()" href="#" style="text-align: center;"><img src="Blackjack.svg" alt="blackjack"></a>
     <p>Blackjack</p>
 </div>
 <div id="container2">
-    <a href="roulette.html" style="text-align: center;"><img src="Roulette.svg" alt="blackjack"></a>
+    <a onclick="roulette()" href="#" style="text-align: center;"><img src="Roulette.svg" alt="blackjack"></a>
     <p>Roulette</p>
 </div>
 <script src="auth.js"></script>
+<script>
+    function askForBet() {
+        const value = parseInt(prompt("Enter a bet"))
+        if (isNaN(value)) {
+            alert("not a number");
+            location.reload();
+        }
+
+        if (value <= 50 && user.money > 50) {
+            alert("Your bet must be larger than or equal to 50");
+            return -1;
+        }
+
+        if (value > user.money) {
+            if (user.money < 50) {
+                if (value > 10_000) {
+                    alert("You can't bet more than 10000 while in dept.");
+                    return -1;
+                } else {
+                    return value;
+                }
+            } else {
+                alert("You can't bet more money than you have");
+                return -1;
+            }
+        } else {
+            return value;
+        }
+    }
+
+    async function blackjack() {
+        if (storedGameState.blackjack === null) {
+            const value = askForBet();
+
+            console.log(value);
+            if (value === -1) return;
+            debugger;
+            storedGameState.lastBet = value;
+            storedGameState.blackjack = "start";
+
+            await updateGameState();
+        }
+
+        location.href = '/blackjack.html';
+    }
+
+    async function roulette() {
+        console.log(storedGameState.roulette);
+    }
+</script>
 </body>
 <footer style="position: fixed;">
     <div class="footer">

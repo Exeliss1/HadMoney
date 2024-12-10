@@ -15,6 +15,9 @@ export interface User {
     username: string;
     hash: string;
     money: number;
+    lastBet: number;
+    blackjackState: any;
+    rouletteState: any;
     token: string;
 }
 

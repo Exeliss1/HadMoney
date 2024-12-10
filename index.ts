@@ -23,8 +23,8 @@ setInterval(async () => {
 
 const server = Bun.serve({
     async fetch(req) {
-        const { url } = req;
-        const { pathname, searchParams } = new URL(url);
+        const {url} = req;
+        const {pathname, searchParams} = new URL(url);
 
         switch (pathname) {
             case "/profile/me":
@@ -47,8 +47,66 @@ const server = Bun.serve({
                         money: m_user.money
                     },
                 });
+            case "/profile/game":
+                const g_token = searchParams.get("token");
+                let g_user: User | undefined;
+                db.users.forEach((u) => {
+                    if (u.token.length > 1 && u.token === g_token) g_user = u;
+                })
+                if (!g_user) {
+                    return Response.json({
+                        success: false,
+                        error: "Invalid token"
+                    });
+                }
+
+                if (req.method === "POST") {
+                    const g_body = await req.json();
+                    g_user.lastBet = g_body.lastBet;
+                    g_user.blackjackState = g_body.blackjack;
+                    g_user.rouletteState = g_body.roulette;
+
+                    return Response.json({
+                        success: true,
+                        lastBet: g_user.lastBet,
+                        blackjack: g_user.blackjackState,
+                        roulette: g_user.rouletteState
+                    });
+                } else {
+                    return Response.json({
+                        success: true,
+                        lastBet: g_user.lastBet,
+                        blackjack: g_user.blackjackState,
+                        roulette: g_user.rouletteState
+                    });
+                }
+            case "/profile/endGame":
+                const e_token = searchParams.get("token");
+                const e_won = parseInt(searchParams.get("w") as string);
+                let e_user: User | undefined;
+                db.users.forEach((u) => {
+                    if (u.token.length > 1 && u.token === e_token) e_user = u;
+                });
+                if (isNaN(e_won)) {
+                    return new Response(null);
+                }
+                if (!e_user) {
+                    return Response.json({
+                        success: false,
+                        error: "Invalid token"
+                    });
+                }
+
+                e_user.money += e_user.lastBet * e_won;
+                e_user.lastBet = 0;
+                e_user.blackjackState = null;
+                e_user.rouletteState = null;
+
+                return Response.json({
+                    success: true
+                });
             case "/auth/login":
-                const { username: login_username, password: login_password } = await req.json();
+                const {username: login_username, password: login_password} = await req.json();
                 const user = db.users.get(login_username);
 
                 if (!user) {
@@ -73,7 +131,7 @@ const server = Bun.serve({
                     token: user.token,
                 });
             case "/auth/register":
-                const { username: reg_username, password: reg_password } = await req.json();
+                const {username: reg_username, password: reg_password} = await req.json();
                 const hash = await Bun.password.hash(reg_password, {algorithm: "argon2id"});
 
                 if (db.users.has(reg_username)) {
@@ -87,6 +145,9 @@ const server = Bun.serve({
                     username: reg_username,
                     hash,
                     money: 100_000,
+                    lastBet: 0,
+                    blackjackState: null,
+                    rouletteState: null,
                     token: ""
                 });
 
@@ -101,7 +162,7 @@ const server = Bun.serve({
         return new Response(file);
     },
     error(error) {
-        if (error.code === 'ENOENT') return new Response('Page not found', { status: 404 });
+        if (error.code === 'ENOENT') return new Response('Page not found', {status: 404});
 
         console.log(error.code);
         return new Response(`<pre>${error}\n${error.stack}</pre>`, {

@@ -16,8 +16,8 @@ function preload() {
 
     baseSpinRate += random(0.02, 0.1);
     ballStopRounds = Math.floor(random(4, 8));
-    ballStop = random(0, Math.PI*2);
-    ballMaxDist = ballStopRounds*Math.PI*2;
+    ballStop = random(0, Math.PI * 2);
+    ballMaxDist = ballStopRounds * Math.PI * 2;
     ballMaxDist += ballStop;
 }
 
@@ -31,7 +31,7 @@ const rvals = [0, 32, 15, 19, 4, 21, 2, 25, 17, 13, 6, 27, 13, 36, 11, 30, 8, 23
 const ranges = [];
 {
     for (let m = 0; m < 37; m++) {
-        ranges.push(2*Math.PI/37*(m+0.5));
+        ranges.push(2 * Math.PI / 37 * (m + 0.5));
     }
 }
 
@@ -45,9 +45,9 @@ function ensureRange(n, n2) {
 function ballLocation(angle, ballPos) {
     for (let i = 0; i < ranges.length; i++) {
         let j = i - 1;
-        if (j < 0) j = ranges.length-1;
-        const start = ensureRange(ranges[j] + angle, Math.PI*2);
-        const end = ensureRange(ranges[i] + angle, Math.PI*2);
+        if (j < 0) j = ranges.length - 1;
+        const start = ensureRange(ranges[j] + angle, Math.PI * 2);
+        const end = ensureRange(ranges[i] + angle, Math.PI * 2);
 
         if (start > end) {
             if (ballPos > start || ballPos < end) {
@@ -75,8 +75,8 @@ function drawWheel() {
     push();
     translate(350, 0);
 
-    const xOffset = 74+(452/2);
-    const yOffset = 74+(452/2);
+    const xOffset = 74 + (452 / 2);
+    const yOffset = 74 + (452 / 2);
 
     translate(xOffset, yOffset);
 
@@ -99,7 +99,7 @@ function drawWheel() {
     scale(0.8 - (0.25 * circScale));
     rotate(ballAngle);
     if (ballAngle < 0) {
-        ballAngle = Math.PI*2;
+        ballAngle = Math.PI * 2;
         ballRounds++;
     }
     image(roulette_pill, 0, 0);

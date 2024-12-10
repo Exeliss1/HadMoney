@@ -4,7 +4,7 @@ async function login() {
 
     const req = await fetch(`/auth/login`, {
         method: 'POST',
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({username, password})
     });
     const resp = await req.json();
 
@@ -23,12 +23,11 @@ async function register() {
 
     const req = await fetch(`/auth/register`, {
         method: 'POST',
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({username, password})
     });
     const resp = await req.json();
 
     if (resp.success) {
-        alert('Successfully registered');
         location.href = '/login.html';
     } else {
         alert(resp.error);
@@ -36,25 +35,59 @@ async function register() {
 }
 
 var user = null;
+var storedGameState = null;
 
-(async ()=>{
+async function updateGameState() {
+    const req = await fetch(`/profile/game?token=${localStorage.getItem('token')}`, {
+        method: 'POST',
+        body: JSON.stringify(storedGameState),
+    });
+
+    const resp = await req.json();
+
+    if (!resp.success) {
+        alert(resp.error);
+    }
+}
+
+async function endGame(mul) {
+    const req = await fetch(`/profile/endGame?token=${localStorage.getItem('token')}&w=${mul}`, {
+        method: 'POST',
+    });
+
+    const resp = await req.json();
+
+    if (!resp.success) {
+        alert(resp.error);
+    }
+
+    storedGameState = null;
+}
+
+(async () => {
     const path = location.pathname;
     if (path !== "/login.html" && path !== "/register.html") {
-        document.getElementById("loginBtn").remove();
-        document.getElementById("registerBtn").remove();
         const token = localStorage.getItem("token");
         if (token !== null) {
-            console.log(token);
-            const req = await fetch(`/profile/me?token=${token}`);
-            const resp = await req.json();
+            document.getElementById("loginBtn").remove();
+            document.getElementById("registerBtn").remove();
 
-            if (!resp.success) {
-                alert(resp.error);
+            const userReq = await fetch(`/profile/me?token=${token}`);
+            const userResp = await userReq.json();
+            const gameReq = await fetch(`/profile/game?token=${token}`);
+            const gameResp = await gameReq.json();
+
+            if (!userResp.success || !gameResp.success) {
+                localStorage.clear();
+                location.reload();
                 return;
             }
 
-            user = resp.user;
+            user = userResp.user;
+            storedGameState = {lastBet: gameResp.lastBet, blackjack: gameResp.blackjack, roulette: gameResp.roulette};
             document.getElementById('profile').innerText = `${user.username} (${user.money})`;
+
+            if (window.postAuth) window.postAuth();
         } else {
 
         }

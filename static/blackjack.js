@@ -191,7 +191,7 @@ function bigWin() {
     }, 100);
 }
 
-function draw() {
+async function draw() {
     background(79, 77, 104, 255);
 
     noStroke();
@@ -224,6 +224,11 @@ function draw() {
 
     if (cardStun > 1) {
         if (dealerWin) {
+            if (storedGameState !== null) {
+                const {lastBet} = storedGameState;
+                await endGame(-1);
+                alert(`You have lost ${lastBet}`);
+            }
             textSize(127);
             fill(255, 0, 0);
             textFont("DM Mono");
@@ -240,12 +245,20 @@ function draw() {
         }
 
         if (playerWins) {
+            if (storedGameState !== null) {
+                const {lastBet} = storedGameState;
+                await endGame(2);
+                alert(`You have won ${lastBet * 2}`);
+            }
             if (!bigWining) bigWin();
 
             return;
         }
 
         if (push) {
+            if (storedGameState !== null) {
+                await endGame(0);
+            }
             textSize(127);
             fill(255, 151, 0);
             textFont("DM Mono");
@@ -262,6 +275,11 @@ function draw() {
         }
 
         if (busted) {
+            if (storedGameState !== null) {
+                const {lastBet} = storedGameState;
+                await endGame(-1);
+                alert(`You have lost ${lastBet}`);
+            }
             textSize(127);
             fill(255, 0, 0);
             textFont("DM Mono");

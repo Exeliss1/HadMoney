@@ -7,8 +7,6 @@
     <link href='https://fonts.googleapis.com/css?family=DM Mono' rel='stylesheet'>
     <title>Blackjack</title>
     <link rel="stylesheet" href="gamesstyle.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/addons/p5.sound.min.js"></script>
 </head>
 <body>
 <!-- Navbar start -->
@@ -31,9 +29,25 @@
     <button onclick="g_split()">Split</button>
     <button onclick="g_double()">Double</button>
 </div>
+<script>
+    window.postAuth = () => {
+        const scripts = [
+            "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js",
+            "blackjack.js"
+        ];
 
+        if (!storedGameState.blackjack) {
+            location.href = "/games.html";
+        }
+
+        scripts.forEach(script => {
+            const tag = document.createElement("script");
+            tag.src = script;
+
+            document.body.appendChild(tag);
+        })
+    }
+</script>
 <script src="auth.js"></script>
-<script src="animation.js"></script>
-<script src="blackjack.js"></script>
 </body>
 </html>
