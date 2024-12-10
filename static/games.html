@@ -40,7 +40,7 @@
             location.reload();
         }
 
-        if (value <= 50 && user.money > 50) {
+        if (value < 50 && user.money > 50) {
             alert("Your bet must be larger than or equal to 50");
             return -1;
         }
@@ -68,7 +68,6 @@
 
             console.log(value);
             if (value === -1) return;
-            debugger;
             storedGameState.lastBet = value;
             storedGameState.blackjack = "start";
 

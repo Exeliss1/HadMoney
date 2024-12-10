@@ -54,12 +54,32 @@ function randomCard(selfArr, otherArr, otherOtherArr, hidden) {
     return card;
 }
 
-function preload() {
-    randomCard(player, dealer, player2, false);
-    randomCard(player, dealer, player2, false);
+async function updateBlackjack() {
+    storedGameState.blackjack = {
+        player,
+        player2,
+        dealer,
+        split,
+        splitBusted
+    };
+    await updateGameState();
+}
 
-    randomCard(dealer, player, player2, false);
-    randomCard(dealer, player, player2, true);
+function preload() {
+    if (storedGameState.blackjack === "start") {
+        randomCard(player, dealer, player2, false);
+        randomCard(player, dealer, player2, false);
+
+        randomCard(dealer, player, player2, false);
+        randomCard(dealer, player, player2, true);
+        updateBlackjack();
+    } else {
+        player = storedGameState.blackjack.player;
+        player2 = storedGameState.blackjack.player2;
+        dealer = storedGameState.blackjack.dealer;
+        split = storedGameState.blackjack.split;
+        splitBusted = storedGameState.blackjack.splitBusted;
+    }
 
     srcs.forEach(s => imgs.set(s, loadImage(`cards/${s}.png`)));
 }
@@ -364,7 +384,7 @@ function dealerRound() {
     }
 }
 
-function g_hit() {
+async function g_hit() {
     if (freeze) return;
     if (splitBusted[0] || splitBusted[1]) return;
 
@@ -372,26 +392,29 @@ function g_hit() {
         randomCard(player, dealer, player2, false);
         let playerPoints = calcPoints(player);
         if (playerPoints > 21) busted = true;
+        if (!busted) await updateBlackjack();
     } else {
         randomCard(player, dealer, player2, false);
         let playerPoints = calcPoints(player);
         randomCard(player2, dealer, player, false);
 
-        dealerNext = true
+        dealerNext = true;
 
         if (playerPoints > 21) splitBusted[0] = true;
         if (playerPoints2 > 21) splitBusted[1] = true;
         if (splitBusted[0] && splitBusted[1]) busted = true;
+        if (!busted) await updateBlackjack();
     }
 }
 
-function g_stand() {
+async function g_stand() {
     if (freeze) return;
 
+    await updateBlackjack();
     dealerRound();
 }
 
-function g_split() {
+async function g_split() {
     if (freeze) return;
     if (player.length !== 2) return;
     if (player[0].card.charCodeAt(0) !== player[1].card.charCodeAt(0)) return;
@@ -405,15 +428,16 @@ function g_split() {
 
     randomCard(player, dealer, player2, false);
     randomCard(player2, dealer, player, false);
-    // dealerRound();
+    await updateBlackjack();
 }
 
-function g_double() {
+async function g_double() {
     if (freeze) return;
     if (split) return;
 
     randomCard(player, dealer, player2, false);
     let playerPoints = calcPoints(player);
     if (playerPoints > 21) busted = true;
+    await updateBlackjack();
     dealerRound();
 }
