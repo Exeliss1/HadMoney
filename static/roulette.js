@@ -118,6 +118,4 @@ function draw() {
 
     noStroke();
     tint(255, 255);
-
-    drawWheel();
 }

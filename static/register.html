@@ -5,10 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=DM Mono' rel='stylesheet'>
-    <title>Roulette</title>
-    <link rel="stylesheet" href="gamesstyle.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="login.css">
+    <title>Register</title>
 </head>
 <body>
     <!-- Navbar start -->
@@ -24,9 +22,20 @@
         <img class="logo" src="logo2.png">
     </div>
     <!-- Navbar end -->
-
+    <div id="logincontainer">
+        <h1 style="text-align: center; font-size: 50px;">Register</h1>
+        <label for="username">Username:</label><br>
+        <input style="background-color: #7a7aa7; border-style: none; color: white; font-family: 'DM Mono';" type="text"
+               id="username" name="username"><br><br>
+        <label for="password">Password:</label><br>
+        <input style="background-color: #7a7aa7; border-style: none; color: white; font-family: 'DM Mono';" type="password"
+               id="password" name="password"><br><br>
+        <button onclick="register()" style="background-color: #7a7aa7; border-style: none; color:white; padding: 10px 20px;">
+            Register
+        </button>
+        <br>
+        <br>
+    </div>
     <script src="auth.js"></script>
-    <script src="animation.js"></script>
-    <script src="roulette.js"></script>
 </body>
 </html>
