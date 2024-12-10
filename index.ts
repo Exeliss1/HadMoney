@@ -134,6 +134,13 @@ const server = Bun.serve({
                 const {username: reg_username, password: reg_password} = await req.json();
                 const hash = await Bun.password.hash(reg_password, {algorithm: "argon2id"});
 
+                if (db.users.size >= 100) {
+                    return Response.json({
+                        success: false,
+                        error: "User limit reached"
+                    });
+                }
+
                 if (db.users.has(reg_username)) {
                     return Response.json({
                         success: false,
