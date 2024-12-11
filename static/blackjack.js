@@ -56,6 +56,8 @@ function randomCard(selfArr, otherArr, otherOtherArr, hidden) {
     return card;
 }
 
+let gameFinished = false;
+
 async function updateBlackjack() {
     storedGameState.blackjack = {
         player,
@@ -243,9 +245,12 @@ async function draw() {
     if (cardStun > 1) {
         if (dealerWin) {
             if (storedGameState !== null) {
-                const {lastBet} = storedGameState;
-                await endGame(-1);
-                alert(`You have lost ${lastBet}`);
+                if (!gameFinished) {
+                    gameFinished = true;
+                    const {lastBet} = storedGameState;
+                    await endGame(-1);
+                    alert(`You have lost ${lastBet}`);
+                }
             }
             textSize(127);
             fill(255, 0, 0);
@@ -264,9 +269,12 @@ async function draw() {
 
         if (playerWins) {
             if (storedGameState !== null) {
-                const {lastBet} = storedGameState;
-                await endGame(2);
-                alert(`You have won ${lastBet * 2}`);
+                if (!gameFinished) {
+                    gameFinished = true;
+                    const {lastBet} = storedGameState;
+                    await endGame(2);
+                    alert(`You have won ${lastBet * 2}`);
+                }
             }
             if (!bigWining) bigWin();
 
@@ -294,9 +302,12 @@ async function draw() {
 
         if (busted) {
             if (storedGameState !== null) {
-                const {lastBet} = storedGameState;
-                await endGame(-1);
-                alert(`You have lost ${lastBet}`);
+                if (!gameFinished) {
+                    gameFinished = true;
+                    const {lastBet} = storedGameState;
+                    await endGame(-1);
+                    alert(`You have lost ${lastBet}`);
+                }
             }
             textSize(127);
             fill(255, 0, 0);
