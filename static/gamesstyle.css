@@ -144,11 +144,11 @@ body {
 
 #p5-canvas {
     display: block;
-    margin-left: 200px;
+    margin-left: 230px;
 }
 
 .buttons {
     position: absolute;
-    left: 850px;
+    left: 880px;
     bottom: 30px;
 }
