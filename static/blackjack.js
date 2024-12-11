@@ -136,7 +136,7 @@ function drawCardsCentered(cardList, y) {
     }
 }
 
-function calcPoints(cards) {
+function calcPoints(cards, ignoreAces = false) {
     let sum = 0;
     let aceCount = 0;
     for (const card of cards) {
@@ -154,10 +154,16 @@ function calcPoints(cards) {
                     value = 10;
                     break;
                 case 'a':
-                    if (aceCount > 0) {
-                        value = 1;
+                    if (ignoreAces) {
+                        value = 0;
                     } else {
-                        value = 11;
+                        const baseValue = calcPoints(cards, true);
+
+                        if (aceCount > 0 || baseValue + 11 > 21) {
+                            value = 1;
+                        } else {
+                            value = 11;
+                        }
                     }
                     aceCount++;
                     break;
