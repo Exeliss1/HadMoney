@@ -63,6 +63,9 @@
     }
 
     async function blackjack() {
+        if (localStorage.getItem("token") == null) {
+            location.href = "/login.html";
+        }
         if (storedGameState.blackjack === null) {
             const value = askForBet();
 
@@ -78,6 +81,9 @@
     }
 
     async function roulette() {
+        if (localStorage.getItem("token") == null) {
+            location.href = "/login.html";
+        }
         console.log(storedGameState.roulette);
     }
 </script>
