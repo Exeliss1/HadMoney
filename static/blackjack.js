@@ -134,8 +134,9 @@ function drawCardsCentered(cardList, y) {
     }
 }
 
-function calcPoints(cards, calcAce = true) {
+function calcPoints(cards) {
     let sum = 0;
+    let aceCount = 0;
     for (const card of cards) {
         const vl = card.card[0];
         let value = parseInt(vl);
@@ -151,17 +152,12 @@ function calcPoints(cards, calcAce = true) {
                     value = 10;
                     break;
                 case 'a':
-                    if (calcAce) {
-                        const acelessPoints = calcPoints(cards, false);
-
-                        if (acelessPoints + 11 < 21) {
-                            value = 11;
-                        } else {
-                            value = 1;
-                        }
+                    if (aceCount > 0) {
+                        value = 1;
                     } else {
                         value = 11;
                     }
+                    aceCount++;
                     break;
                 default:
                     throw `Unknown value: ${vl}`;
