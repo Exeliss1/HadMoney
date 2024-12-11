@@ -1,0 +1,114 @@
+diff --git a/static/about.html b/static/about.html
+index c504e4c..63e52b1 100644
+--- a/static/about.html
++++ b/static/about.html
+@@ -9,7 +9,6 @@
+     <link rel="stylesheet" href="about.css">
+ </head>
+ <body>
+-<!-- Navbar start -->
+ <div class="navbar">
+     <ul>
+         <li><a href="index.html">Home</a></li>
+@@ -21,7 +20,6 @@
+     </ul>
+     <img class="logo" src="logo2.png">
+ </div>
+-<!-- Navbar end -->
+     <h1>About HadMoney.com</h1>
+     <p>Welcome to HadMoney.com, your ultimate destination for entertainment, insights, and opportunities in the world of
+         online gambling! Whether you're a seasoned player or a newcomer looking to explore the excitement of casinos, sports
+diff --git a/static/index.html b/static/index.html
+index 0d70737..e2bde8e 100644
+--- a/static/index.html
++++ b/static/index.html
+@@ -12,19 +12,27 @@
+ 
+ </head>
+ <header>
+-    <!-- Navbar start -->
++    
+ <div class="navbar">
+     <ul>
+         <li><a href="index.html">Home</a></li>
+         <li><a href="games.html">Games</a></li>
+         <li><a href="about.html">About</a></li>
++        <li><div class="dropdown">
++            <a class="dropbtn">Select Style</a>
++            <div class="dropdown-content">
++              <a href="#">Default</a>
++              <a href="#">Dark</a>
++              <a href="#">Light</a>
++            </div>  
++        </div>
+         <li style="float:right;"><a href="#" id="profile">Profile</a></li>
+         <li style="float:right;"><a id="registerBtn" href="register.html">Register</a></li>
+         <li style="float:right;"><a id="loginBtn" href="login.html">Login</a></li>
+     </ul>
+     <img class="logo" src="logo2.png">
+ </div>
+-<!-- Navbar end -->
++
+ </header>
+ <body>
+ <div class="drop-in">
+@@ -62,6 +70,7 @@
+     </p>
+ </div>
+ <br>
++
+ <table class="leaderboard" style="width: 14%;">
+     <tr>
+         <th colspan="2">Most Wins</th>
+diff --git a/static/style.css b/static/style.css
+index 6c8b157..a2f319f 100644
+--- a/static/style.css
++++ b/static/style.css
+@@ -4,6 +4,47 @@ body {
+     color: white;
+ }
+ 
++ .dropbtn {
++    background-color: none;
++    color: white;
++    padding: 16px;
++    font-size: 16px;
++    border: none;
++  }
++  
++
++  .dropdown {
++    position: relative;
++    display: inline-block;
++  }
++
++  .dropdown-content {
++    display: none;
++    position: absolute;
++    background-color: #f1f1f1;
++    min-width: 160px;
++    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
++    z-index: 1;
++  }
++  
++
++  .dropdown-content a {
++    color: black;
++    padding: 12px 16px;
++    text-decoration: none;
++    display: block;
++  }
++  
++
++  .dropdown-content a:hover {background-color: #ddd;}
++  
++
++  .dropdown:hover .dropdown-content {display: block;}
++  
++
++  .dropdown:hover .dropbtn {background-color: none;} 
++
++
+ .navbar ul {
+     list-style-type: none;
+     margin: 0;
