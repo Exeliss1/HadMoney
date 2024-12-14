@@ -103,7 +103,7 @@ function drawCard(id, anim, x, y) {
         offset = 100;
     }
     translate(0, -offset);
-    translate(0, offset * animateEnding(anim));
+    translate(0, offset * animateC(anim));
     image(imgs.get(id), x, y);
     pop();
 }
@@ -192,6 +192,9 @@ function calcPoints(cards, ignoreAces = false) {
 
 function animateEnding(timeFraction) {
     return Math.pow(timeFraction, 2);
+}
+function animateC(timeFraction) {
+    return Math.sqrt(timeFraction);
 }
 
 function resetGame() {
