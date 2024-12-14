@@ -78,21 +78,6 @@ body {
     color: var(--on-primary);
     text-align: center;
 }
-
-.leaderboard {
-    margin-left: 1450px;
-    margin-top: -800px;
-    animation: fade-in 3700ms 1000ms backwards;
-}
-
-.leaderboard, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    border-color: var(--on-background);
-    color: var(--on-primary);
-    text-align: center;
-}
-
 .nemtom {
     padding: 200px;
     animation: fade-in 900ms 700ms backwards;
