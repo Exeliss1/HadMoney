@@ -3,8 +3,11 @@ const srcs = cards.map(m => m);
 srcs.push("cardBack");
 
 let player = [];
+let playerCardPos = [];
 let player2 = [];
+let player2CardPos = [];
 let dealer = [];
+let dealerCardPos = [];
 
 let freeze = false;
 
@@ -17,7 +20,7 @@ let busted = false;
 let splitBusted = [false, false];
 let playerWins = false;
 let dealerWin = false;
-let push = false;
+let s_push = false;
 let resetting = false;
 let split = false;
 
@@ -93,11 +96,19 @@ function setup() {
     canvas.id("p5-canvas");
 }
 
-function drawCard(id, x, y) {
+function drawCard(id, anim, x, y) {
+    push();
+    let offset = -100;
+    if (y < 300) {
+        offset = 100;
+    }
+    translate(0, -offset);
+    translate(0, offset * animateEnding(anim));
     image(imgs.get(id), x, y);
+    pop();
 }
 
-function drawCardsCentered(cardList, y) {
+function drawCardsCentered(cardList, animList, y) {
     let x = 0;
     let margin = 0;
 
@@ -127,10 +138,11 @@ function drawCardsCentered(cardList, y) {
 
     if (cardList.length > 0) margin = 200;
 
-    for (const card of cardList) {
+    for (let i = 0; i < cardList.length; i++) {
+        const card = cardList[i];
         let cardImg = card.card;
         if (card.hidden) cardImg = "cardBack";
-        drawCard(cardImg, x, y);
+        drawCard(cardImg, animList[i], x, y);
 
         x += margin;
     }
@@ -217,11 +229,34 @@ function bigWin() {
     }, 100);
 }
 
+function animateCards(animArr, arr) {
+    if (animArr.length > arr.length) {
+        animArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            animArr.push(1);
+        }
+    }
+    while (animArr.length < arr.length) {
+        animArr.push(0);
+    }
+
+    for (let i = 0; i < animArr.length; i++) {
+        if (animArr[i] < 1) {
+            animArr[i] += 0.05;
+        }
+        if (animArr[i] > 1) animArr[i] = 1;
+    }
+}
+
 async function draw() {
     background(79, 77, 104, 255);
 
     noStroke();
     tint(255, 255);
+
+    animateCards(dealerCardPos, dealer);
+    animateCards(playerCardPos, player);
+    animateCards(player2CardPos, player2);
 
     if ((splitBusted[0] || splitBusted[1]) && !busted) {
         if (halfBustAnimation < 1) {
@@ -235,7 +270,7 @@ async function draw() {
         }
     }
 
-    if (dealerWin || playerWins || push || busted) {
+    if (dealerWin || playerWins || s_push || busted) {
         if (cardStun < 1) {
             revealCards();
             freeze = true;
@@ -287,7 +322,7 @@ async function draw() {
             return;
         }
 
-        if (push) {
+        if (s_push) {
             if (storedGameState !== null) {
                 await endGame(0);
             }
@@ -332,19 +367,19 @@ async function draw() {
     }
 
     if (!split) {
-        drawCardsCentered(dealer, 100);
+        drawCardsCentered(dealer, dealerCardPos, 100);
     } else {
-        drawCardsCentered(dealer, 0);
+        drawCardsCentered(dealer, dealerCardPos, 0);
     }
 
     if (!split) {
-        drawCardsCentered(player, 500);
+        drawCardsCentered(player, playerCardPos, 500);
     } else {
         if (splitBusted[0]) tint(255, 255, 255, 255 - (255*halfBustAnimation));
-        drawCardsCentered(player, 300);
+        drawCardsCentered(player, playerCardPos, 300);
         tint(255, 255, 255, 255);
         if (splitBusted[1]) tint(255, 255, 255, 255 - (255*halfBustAnimation));
-        drawCardsCentered(player2, 500);
+        drawCardsCentered(player2, player2CardPos, 500);
         tint(255, 255, 255, 255);
     }
 
@@ -393,7 +428,7 @@ function dealerRound() {
     if (dealerPoints > 21 || playerPoints > dealerPoints) {
         playerWins = true;
     } else if (playerPoints === dealerPoints) {
-        push = true;
+        s_push = true;
     } else if (dealerPoints > playerPoints) {
         dealerWin = true;
     }
