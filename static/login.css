@@ -5,51 +5,6 @@
     --on-primary: white;
 }
 
-.dropbtn {
-    background-color: var(--on-background);
-    color: var(--on-primary);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    position: fixed;
-    margin-top: 700px;
-    border: 1px solid white;
-    border-radius: 5px;
-  }
-  
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: var(--on-background);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    margin-top: 610px;
-  }
-  
-
-  .dropdown-content a {
-    color: var(--on-primary);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-
-  .dropdown-content a:hover {background-color:  var(--primary-variant);}
-  
-
-  .dropdown:hover .dropdown-content {display: block; position: fixed;}
-  
-
-  .dropdown:hover .dropbtn {background-color: var(--on-background);} 
-
 body {
     background-color: #4f4d68;
     font-family: 'DM Mono';
